@@ -50,7 +50,7 @@ public class Main {
                 System.out.println(System.getProperty("user.dir"));
             }
             else if(input.startsWith("cd ")) {
-                String dest = input.split(" ")[1].trim();
+                String dest = input.substring(3);
                 if(checkLocationValid(dest)) {
                     System.setProperty("user.dir", dest);
                 }
