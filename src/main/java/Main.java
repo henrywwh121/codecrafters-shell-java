@@ -32,6 +32,8 @@ public class Main {
                 String typeToCheck = input.substring(4).trim();
                 boolean isBuiltin = Arrays.asList(builtinCommands).contains(typeToCheck);
                 if(isBuiltin) {
+                    String response = typeToCheck + ": not found";
+
                     String[] paths = env.split(";");
                     for (String path : paths) {
                         File folder = new File(path);
@@ -39,13 +41,13 @@ public class Main {
                         if (listOfFiles != null) {
                             for (File file : listOfFiles) {
                                 if (file.getName().equals(typeToCheck)) {
-                                    System.out.println(path + "\\" + typeToCheck);
+                                    response = path + "\\" + typeToCheck;
                                     break;
                                 }
                             }
                         }
                     }
-                    System.out.println(typeToCheck + ": not found");
+                    System.out.println(response);
                 }
                 else {
                     System.out.println(typeToCheck + ": not found");
