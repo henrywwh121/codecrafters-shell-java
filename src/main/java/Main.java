@@ -38,7 +38,7 @@ public class Main {
                 }
                 else {
                     String response = typeToCheck + ": command not found";
-                    for(String path: env.split(";")) {
+                    for(String path: env.split(":")) {
                         File file = new File(path, typeToCheck);
                         if(file.exists()) {
                             response = typeToCheck + " is " + file.getPath();
