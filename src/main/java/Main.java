@@ -42,7 +42,7 @@ public class Main {
                     if ((path = getCommandLocation(typeToCheck)) != null) {
                         System.out.println(typeToCheck + " is " + path);
                     } else {
-                        System.out.println(input + ": not found");
+                        System.out.println(typeToCheck + ": not found");
                     }
                 }
             } else if (getCommandLocation(input.split(" ")[0]) != null) {
