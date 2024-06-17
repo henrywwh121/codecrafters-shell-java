@@ -46,7 +46,6 @@ public class Main {
                     }
                 }
             } else if (getCommandLocation(input.split(" ")[0]) != null) {
-                System.out.println(input.split(" ")[0]);
                 ProcessBuilder pb = new ProcessBuilder(input).inheritIO();
                 Process p = pb.start();
                 p.waitFor();
