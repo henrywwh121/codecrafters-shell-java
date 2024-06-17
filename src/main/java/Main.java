@@ -32,30 +32,35 @@ public class Main {
                 String typeToCheck = input.substring(4).trim();
                 boolean isBuiltin = Arrays.asList(builtinCommands).contains(typeToCheck);
                 if(isBuiltin) {
-                    String response = typeToCheck + ": not found";
-
-                    String[] paths = env.split(";");
-                    for (String path : paths) {
-                        File folder = new File(path);
-                        File[] listOfFiles = folder.listFiles();
-                        if (listOfFiles != null) {
-                            for (File file : listOfFiles) {
-                                if (file.getName().equals(typeToCheck)) {
-                                    response = path + "\\" + typeToCheck;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    System.out.println(response);
+                    System.out.println(typeToCheck + " is a shell builtin");
                 }
                 else {
-                    System.out.println(typeToCheck + ": not found");
+                    String response = getExecutePath(typeToCheck);
+                    System.out.println(response);
                 }
             }
             else {
                 System.out.println(input + ": command not found");
             }
         }
+    }
+
+    private static String getExecutePath(String typeToCheck) {
+        String response = typeToCheck + ": not found";
+
+        String[] paths = env.split(";");
+        for (String path : paths) {
+            File folder = new File(path);
+            File[] listOfFiles = folder.listFiles();
+            if (listOfFiles != null) {
+                for (File file : listOfFiles) {
+                    if (file.getName().equals(typeToCheck)) {
+                        response = typeToCheck + " is " + path;
+                        break;
+                    }
+                }
+            }
+        }
+        return response;
     }
 }
