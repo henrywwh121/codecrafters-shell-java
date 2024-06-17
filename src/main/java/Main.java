@@ -40,12 +40,13 @@ public class Main {
                 } else {
                     String path;
                     if ((path = getCommandLocation(typeToCheck)) != null) {
-                        System.out.println(typeToCheck + "is" + path);
+                        System.out.println(typeToCheck + " is " + path);
                     } else {
                         System.out.println(input + ": not found");
                     }
                 }
             } else if (getCommandLocation(input.split(" ")[0]) != null) {
+                System.out.println(input.split(" ")[0]);
                 ProcessBuilder pb = new ProcessBuilder(input).inheritIO();
                 Process p = pb.start();
                 p.waitFor();
