@@ -37,7 +37,7 @@ public class Main {
                     System.out.println(typeToCheck + " is a shell builtin");
                 }
                 else {
-                    String response = typeToCheck + ": command not found";
+                    String response = typeToCheck + ": not found";
                     for(String path: env.split(":")) {
                         File file = new File(path, typeToCheck);
                         if(file.exists()) {
@@ -49,7 +49,7 @@ public class Main {
                 }
             }
             else {
-                System.out.println(input + ": not found");
+                System.out.println(input + ": command not found");
             }
         }
     }
