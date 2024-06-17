@@ -40,7 +40,7 @@ public class Main {
                     for(String path: env.split(":")) {
                         File file = new File(path, typeToCheck);
                         if(file.exists()) {
-                            System.out.println(typeToCheck + "is" + path);
+                            System.out.println(typeToCheck + " is " + file.getPath());
                             return;
                         }
                     }
