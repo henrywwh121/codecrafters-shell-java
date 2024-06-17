@@ -37,15 +37,14 @@ public class Main {
                     System.out.println(typeToCheck + " is a shell builtin");
                 }
                 else {
-                    String response = input + ": command not found";
-                    for(String path: env.split(";")) {
-                        Path fullPath = Path.of(path, typeToCheck);
-                        if(Files.isRegularFile(fullPath)){
-                            response = typeToCheck + "is" + path;
+                    for(String path: env.split(":")) {
+                        File file = new File(path, typeToCheck);
+                        if(file.exists()) {
+                            System.out.println(typeToCheck + "is" + path);
                             return;
                         }
                     }
-                    System.out.println(response);
+                    System.out.println(input + ": command not found");
                 }
             }
             else {
