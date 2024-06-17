@@ -53,7 +53,6 @@ public class Main {
                 String dest = input.split(" ")[1].trim();
                 if(checkLocationValid(dest)) {
                     System.setProperty("user.dir", dest);
-                    System.out.println(dest);
                 }
                 else {
                     System.out.println("cd:" +  dest + ": No such file or directory");
