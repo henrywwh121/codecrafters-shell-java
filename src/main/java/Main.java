@@ -1,7 +1,10 @@
 // Uncomment this block to pass the first stage
 // import java.util.Scanner;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -49,8 +52,23 @@ public class Main {
                 }
             }
             else {
-                System.out.println(input + ": command not found");
+                try {
+                    runCommand(input);
+                } catch (Exception e) {
+                    System.out.println(input + ": command not found");
+                }
             }
         }
+    }
+
+    static void runCommand(String command) throws InterruptedException, IOException {
+        Process proc = Runtime.getRuntime().exec(command);
+        BufferedReader reader =
+                new BufferedReader(new InputStreamReader(proc.getInputStream()));
+        String line = "";
+        while((line = reader.readLine()) != null) {
+            System.out.print(line + "\n");
+        }
+        proc.waitFor();
     }
 }
