@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Main {
 
     static String[] builtinCommands = {
-            "exit", "type", "echo"
+            "exit", "type", "echo", "pwd", "cd"
     };
 
     static String env = System.getenv("PATH");
@@ -45,7 +45,7 @@ public class Main {
                         System.out.println(typeToCheck + ": not found");
                     }
                 }
-            } else if (getCommandLocation(input.split(" ")[0]) != null) {
+            } else if (getCommandLocation(input.split(" ")[0]) != null && !Arrays.asList(builtinCommands).contains(input.split(" ")[0])) {
                 ProcessBuilder pb = new ProcessBuilder();
                 for(String arg: input.split(" ")) {
                     pb.command().add(arg);
