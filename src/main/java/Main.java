@@ -55,7 +55,7 @@ public class Main {
                     System.setProperty("user.dir", dest);
                 }
                 else {
-                    System.out.println("cd:" +  dest + ": No such file or directory");
+                    System.out.println(dest + ": No such file or directory");
                 }
             }
             else if (getCommandLocation(input.split(" ")[0]) != null
