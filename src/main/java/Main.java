@@ -34,7 +34,7 @@ public class Main {
                 System.out.println(input.substring(4).trim());
             } else if (input.startsWith("type ")) {
                 String typeToCheck = input.substring(4).trim();
-                boolean isBuiltin = Arrays.asList(builtinCommands).contains(typeToCheck);
+                boolean isBuiltin = checkCommandInBuiltin(typeToCheck);
                 if (isBuiltin) {
                     System.out.println(typeToCheck + " is a shell builtin");
                 } else {
@@ -45,7 +45,11 @@ public class Main {
                         System.out.println(typeToCheck + ": not found");
                     }
                 }
-            } else if (getCommandLocation(input.split(" ")[0]) != null && !Arrays.asList(builtinCommands).contains(input.split(" ")[0])) {
+            } else if (input.equals("pwd")){
+                System.out.println(System.getProperty("user.dir"));
+            }
+            else if (getCommandLocation(input.split(" ")[0]) != null
+                    && !checkCommandInBuiltin(input.split(" ")[0])) {
                 ProcessBuilder pb = new ProcessBuilder();
                 for(String arg: input.split(" ")) {
                     pb.command().add(arg);
@@ -67,5 +71,9 @@ public class Main {
             }
         }
         return null;
+    }
+
+    static boolean checkCommandInBuiltin(String command) {
+        return Arrays.asList(builtinCommands).contains(command);
     }
 }
