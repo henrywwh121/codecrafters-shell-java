@@ -2,6 +2,8 @@
 // import java.util.Scanner;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
@@ -35,7 +37,14 @@ public class Main {
                     System.out.println(typeToCheck + " is a shell builtin");
                 }
                 else {
-                    String response = getExecutePath(typeToCheck);
+                    String response = input + ": command not found";
+                    for(String path: env.split(";")) {
+                        Path fullPath = Path.of(path, typeToCheck);
+                        if(Files.isRegularFile(fullPath)){
+                            response = typeToCheck + "is" + path;
+                            return;
+                        }
+                    }
                     System.out.println(response);
                 }
             }
@@ -43,24 +52,5 @@ public class Main {
                 System.out.println(input + ": command not found");
             }
         }
-    }
-
-    private static String getExecutePath(String typeToCheck) {
-        String response = typeToCheck + ": not found";
-
-        String[] paths = env.split(";");
-        for (String path : paths) {
-            File folder = new File(path);
-            File[] listOfFiles = folder.listFiles();
-            if (listOfFiles != null) {
-                for (File file : listOfFiles) {
-                    if (file.getName().equals(typeToCheck)) {
-                        response = typeToCheck + " is " + path;
-                        break;
-                    }
-                }
-            }
-        }
-        return response;
     }
 }
