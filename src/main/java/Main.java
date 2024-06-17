@@ -46,9 +46,13 @@ public class Main {
                     }
                 }
             } else if (getCommandLocation(input.split(" ")[0]) != null) {
-                ProcessBuilder pb = new ProcessBuilder(input).inheritIO();
+                ProcessBuilder pb = new ProcessBuilder();
+                for(String arg: input.split(" ")) {
+                    pb.command().add(arg);
+                }
                 Process p = pb.start();
                 p.waitFor();
+                p.getInputStream().transferTo(System.out);
             } else {
                 System.out.println(input + ": command not found");
             }
