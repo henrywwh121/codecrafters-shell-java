@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
@@ -48,6 +49,16 @@ public class Main {
             } else if (input.equals("pwd")){
                 System.out.println(System.getProperty("user.dir"));
             }
+            else if(input.startsWith("cd ")) {
+                String dest = input.split(" ")[1].trim();
+                if(checkLocationValid(dest)) {
+                    System.setProperty("user.dir", dest);
+                    System.out.println(dest);
+                }
+                else {
+                    System.out.println("cd:" +  dest + ": No such file or directory");
+                }
+            }
             else if (getCommandLocation(input.split(" ")[0]) != null
                     && !checkCommandInBuiltin(input.split(" ")[0])) {
                 ProcessBuilder pb = new ProcessBuilder();
@@ -75,5 +86,10 @@ public class Main {
 
     static boolean checkCommandInBuiltin(String command) {
         return Arrays.asList(builtinCommands).contains(command);
+    }
+
+    static boolean checkLocationValid(String location) {
+        File file = new File(location);
+        return file.exists();
     }
 }
