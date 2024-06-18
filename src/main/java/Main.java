@@ -8,15 +8,16 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class Main {
 
     static String[] builtinCommands = {
             "exit", "type", "echo", "pwd", "cd"
     };
+
+    static final String SEPARATOR =  Pattern.quote(System.getProperty("file.separator"));
 
     static String env = System.getenv("PATH");
 
@@ -46,22 +47,51 @@ public class Main {
                         System.out.println(typeToCheck + ": not found");
                     }
                 }
-            } else if (input.equals("pwd")){
+            } else if (input.equals("pwd")) {
                 System.out.println(System.getProperty("user.dir"));
-            }
-            else if(input.startsWith("cd ")) {
-                String dest = input.substring(3);
-                if(checkLocationValid(dest)) {
+            } else if (input.startsWith("cd ")) {
+                String original = input.substring(3);
+                String dest = original;
+
+                String[] currSegments = System.getProperty("user.dir").replaceAll(SEPARATOR, "/").split("/");
+                List<String> currSegmentsList = Arrays.asList(currSegments);
+                ArrayList<String> currSegmentsArrayList = new ArrayList<>(currSegmentsList);
+                //relative path
+                if(dest.startsWith(".")) {
+                    //if(!dest.endsWith(SEPARATOR)) dest += SEPARATOR;
+                    String[] destSegments = dest.split("/");
+
+                    for(int i = 0; i < destSegments.length; i++){
+                        if(destSegments[i].equals("..")){
+                            currSegmentsArrayList.remove(currSegmentsArrayList.size() - 1);
+                        }
+                        else if(destSegments[i].equals(".")) {
+
+                        }
+                        else {
+                            currSegmentsArrayList.add(destSegments[i]);
+                        }
+                        boolean isValid = checkLocationValid(String.join("\\", currSegmentsArrayList));
+                        if(!isValid) {
+                            System.out.println(dest + ": No such file or directory");
+                            dest = original;
+                        }
+                    }
+
+                    dest = String.join("/", currSegmentsArrayList);
                     System.setProperty("user.dir", dest);
                 }
                 else {
-                    System.out.println(dest + ": No such file or directory");
+                    if (checkLocationValid(dest)) {
+                        System.setProperty("user.dir", dest);
+                    } else {
+                        System.out.println(original + ": No such file or directory");
+                    }
                 }
-            }
-            else if (getCommandLocation(input.split(" ")[0]) != null
+            } else if (getCommandLocation(input.split(" ")[0]) != null
                     && !checkCommandInBuiltin(input.split(" ")[0])) {
                 ProcessBuilder pb = new ProcessBuilder();
-                for(String arg: input.split(" ")) {
+                for (String arg : input.split(" ")) {
                     pb.command().add(arg);
                 }
                 Process p = pb.start();
