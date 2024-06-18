@@ -82,7 +82,7 @@ public class Main {
                     System.setProperty("user.dir", dest);
                 }
                 else if (dest.equals("~")){
-                    System.setProperty("user.dir", System.getProperty("user.home"));
+                    System.setProperty("user.dir", System.getenv("HOME"));
                 }
                 else {
                     if (checkLocationValid(dest)) {
