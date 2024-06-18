@@ -71,7 +71,7 @@ public class Main {
                         else {
                             currSegmentsArrayList.add(destSegments[i]);
                         }
-                        boolean isValid = checkLocationValid(String.join("\\", currSegmentsArrayList));
+                        boolean isValid = checkLocationValid(String.join("/", currSegmentsArrayList));
                         if(!isValid) {
                             System.out.println(dest + ": No such file or directory");
                             dest = original;
