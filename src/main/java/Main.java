@@ -12,13 +12,10 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class Main {
-
     static String[] builtinCommands = {
             "exit", "type", "echo", "pwd", "cd"
     };
-
     static final String SEPARATOR =  Pattern.quote(System.getProperty("file.separator"));
-
     static String env = System.getenv("PATH");
 
     public static void main(String[] args) throws Exception {
