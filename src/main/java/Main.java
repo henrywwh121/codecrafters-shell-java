@@ -50,7 +50,7 @@ public class Main {
             } else if (input.equals("pwd")) {
                 System.out.println(System.getProperty("user.dir"));
             } else if (input.startsWith("cd ")) {
-                String original = input.substring(3);
+                String original = input.substring(3).trim();
                 String dest = original;
 
                 String[] currSegments = System.getProperty("user.dir").replaceAll(SEPARATOR, "/").split("/");
@@ -80,6 +80,9 @@ public class Main {
 
                     dest = String.join("/", currSegmentsArrayList);
                     System.setProperty("user.dir", dest);
+                }
+                else if (dest.equals("~")){
+                    System.setProperty("user.dir", System.getProperty("user.home"));
                 }
                 else {
                     if (checkLocationValid(dest)) {
